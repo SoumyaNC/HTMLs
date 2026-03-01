@@ -1,0 +1,529 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>AI Call Review</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+body{
+  margin:0;
+  font-family:'Inter',sans-serif;
+  background:#f4f7fb;
+  color:#111827;
+}
+
+/* HEADER */
+
+.header{
+  padding:24px 40px;
+  background:white;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  box-shadow:0 4px 12px rgba(0,0,0,0.04);
+}
+
+.header h1{
+  margin:0;
+  font-size:18px;
+  font-weight:600;
+}
+
+.header span{
+  font-size:14px;
+  color:#6b7280;
+}
+
+/* TOP SECTION */
+
+.top-section{
+   padding:40px;
+  display:flex;
+  gap:30px;
+  align-items:stretch;   /* important */
+}
+
+.box{
+  background:white;
+  padding:30px;
+  border-radius:18px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.06);
+}
+
+.score{
+  font-size:64px;
+  font-weight:700;
+  color:#4f46e5;
+}
+
+.label{
+  font-size:13px;
+  color:#6b7280;
+  margin-top:6px;
+}
+
+.sentiment-word{
+  font-size:26px;
+  font-weight:600;
+}
+
+.negative { background: #ef4444; }
+    .neutral { background: #facc15; }
+    .positive { background: #22c55e; }
+
+.summary{
+  flex:1;
+  font-size:14px;
+  line-height:1.7;
+  color:#374151;
+}
+
+/* KPI GRID */
+
+.container{
+  padding:0 40px 40px 40px;
+}
+
+.kpi-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:24px;
+}
+
+.kpi-card{
+  background:white;
+  border-radius:18px;
+  padding:22px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.08);
+}
+
+.kpi-title{
+  font-weight:600;
+  margin-bottom:6px;
+}
+
+.kpi-value{
+  font-size:14px;
+  margin-bottom:6px;
+}
+
+.status{
+  font-size:13px;
+  font-weight:600;
+  margin-bottom:10px;
+}
+
+.good{ color:#16a34a; }
+.mid{ color:#d97706; }
+.bad{ color:#dc2626; }
+
+/* HISTORY */
+.history{
+  display:flex;
+  align-items:center;
+  gap:6px;
+  font-size:12px;
+  margin-bottom:8px;
+}
+
+.kpi-coach{
+  font-size:13px;
+  color:#374151;
+  line-height:1.5;
+}
+
+/* COACHING SECTION */
+
+.coaching-section{
+  margin:40px;
+  background:white;
+  border-radius:20px;
+  padding:30px;
+  box-shadow:0 12px 30px rgba(0,0,0,0.06);
+}
+
+.coaching-section h2{
+  margin-top:0;
+  margin-bottom:20px;
+}
+
+.coaching-grid{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:30px;
+}
+
+ul{
+  padding-left:18px;
+  font-size:14px;
+  line-height:1.6;
+}
+
+.score-section, .sentiment-section {
+      display: inline-block;
+      vertical-align: top;
+    }
+	.sentiment-bar {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px;
+    }
+    .sentiment-bar div {
+           padding: 10px;
+      text-align: center;
+      border-radius: 10px;
+      font-weight: bold;
+    }
+	
+.chip {
+    padding: 4px 8px;
+    border-radius: 8px;
+    background: #eef2ff;
+    color: #4338ca;
+}
+.latest {
+    background: #4f46e5;
+    color: white;
+    font-weight: 600;
+}
+.arrow-up{
+  color:#16a34a;
+  font-weight:700;
+}
+
+.arrow-down{
+  color:#dc2626;
+  font-weight:700;
+}
+
+/* GAUGE */
+.gauge-wrap{
+  width:200px;
+  text-align:center;
+  <!-- transform: scale(0.7); -->
+    
+}
+
+.gauge-value{
+  font-size:42px;
+  font-weight:700;
+  margin-top:-20px;
+}
+
+.gauge-label{
+  font-size:13px;
+  color:#6b7280;
+}
+.card {
+    background: white;
+    padding: 25px;
+    border-radius: 18px;
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.06);
+}
+.top-section .box,
+.top-section .card {
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+}
+.coaching-layout{
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(300px,1fr));
+  gap:25px;
+}
+
+.coach-card{
+  background:white;
+  padding:25px;
+  border-radius:16px;
+  box-shadow:0 8px 25px rgba(0,0,0,0.06);
+}
+
+.coach-title{
+  font-weight:600;
+  margin-bottom:15px;
+  font-size:15px;
+}
+
+.priority{
+  border-left:5px solid #ef4444;
+}
+
+.strength{
+  border-left:5px solid #22c55e;
+}
+
+.target{
+  border-left:5px solid #4f46e5;
+}
+
+.evidence{
+  border-left:5px solid #f59e0b;
+}
+
+.target-grid{
+  display:flex;
+  gap:15px;
+  flex-wrap:wrap;
+}
+
+.target-box{
+  background:#f3f4f6;
+  padding:12px;
+  border-radius:10px;
+  text-align:center;
+  min-width:90px;
+}
+
+.target-number{
+  font-weight:700;
+  font-size:16px;
+}
+
+.target-label{
+  font-size:12px;
+  color:#6b7280;
+}
+
+.evidence-block{
+  margin-bottom:12px;
+}
+
+.evidence-tag{
+  display:inline-block;
+  background:#fee2e2;
+  color:#b91c1c;
+  font-size:11px;
+  padding:4px 8px;
+  border-radius:6px;
+  margin-bottom:6px;
+}
+
+.evidence-tag.positive{
+  background:#dcfce7;
+  color:#15803d;
+}
+
+.evidence-text{
+  font-size:13px;
+  color:#374151;
+  background:#f9fafb;
+  padding:8px;
+  border-radius:8px;
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+  <h1>AI Call Simulation Review</h1>
+  <span>Agent: Rahul S. | Refund Delay | Medium</span>
+</div>
+
+<!-- TOP SECTION -->
+<div class="top-section">
+<!-- SEMI CIRCULAR GAUGE -->
+  <div class="card gauge-wrap">
+
+  <svg viewBox="0 0 240 140" width="200" height="120">
+
+    <!-- Background Arc -->
+    <path
+      d="M20 120 A100 100 0 0 1 220 120"
+      fill="none"
+      stroke="#e5e7eb"
+      stroke-width="18"
+      stroke-linecap="round"
+    />
+
+    <!-- Gradient -->
+    <defs>
+      <linearGradient id="scoreGradient">
+        <stop offset="0%" stop-color="#ef4444"/>
+        <stop offset="50%" stop-color="#f59e0b"/>
+        <stop offset="100%" stop-color="#22c55e"/>
+      </linearGradient>
+    </defs>
+
+    <!-- Foreground Arc -->
+    <path
+      id="scoreArc"
+      d="M20 120 A100 100 0 0 1 220 120"
+      fill="none"
+      stroke="url(#scoreGradient)"
+      stroke-width="18"
+      stroke-linecap="round"
+      stroke-dasharray="314"
+      stroke-dashoffset="56"
+    />
+
+  </svg>
+
+  <div class="gauge-value">82</div>
+  <div class="gauge-label">Overall Quality Score</div>
+
+</div>
+  <!-- <div class="box"> -->
+    <!-- <div class="score">82</div> -->
+   <!-- <div class="label">Overall Quality Score</div> -->
+  <!-- </div> -->
+
+  <div class="box">
+    <div class="sentiment-section">
+      <div class="sentiment-bar">
+        <div class="positive">😊 Positive</div>
+      </div>
+	   <div class="label">Overall Agent Sentiment</div>
+    </div>
+  </div>
+
+  <div class="box summary">
+    Customer contacted support regarding delayed refund. Agent verified order ID and provided refund timeline. Emotional validation was not expressed before explaining policy. Diagnostic probing was limited. Call resolved but emotional engagement remained average.
+  </div>
+
+</div>
+
+<div class="container">
+
+<!-- KPI CARDS -->
+<div class="kpi-grid">
+
+  <div class="kpi-card">
+    <div class="kpi-title">Probing Depth</div>
+    <div class="kpi-value">1 question before solution (Target: 3+)</div>
+    <div class="status bad">Low</div>
+    <div class="history">Last 3 Calls: <span class="chip">2</span><span class="chip">1</span><span class="chip latest">1</span>
+	<span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Ask at least 2–3 clarifying questions before offering resolution.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Assumption Risk</div>
+    <div class="kpi-value">Limited verification before policy explanation</div>
+    <div class="status mid">Medium</div>
+    <div class="history">Last 3 Calls: <span class="chip">Low</span><span class="chip">Medium</span><span class="chip latest">Medium</span><span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Verify refund status before sharing timeline commitments.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Empathy Timing</div>
+    <div class="kpi-value">No validation before resolution</div>
+    <div class="status bad">Missing</div>
+    <div class="history">Last 3 Calls: <span class="chip">Present</span><span class="chip">Missing</span><span class="chip latest">Missing</span><span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Acknowledge customer frustration immediately after it is expressed.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Solution Clarity</div>
+    <div class="kpi-value">Partially structured explanation</div>
+    <div class="status mid">Moderate</div>
+    <div class="history">Last 3 Calls: <span class="chip">Clear</span><span class="chip">Moderate</span><span class="chip latest">Moderate</span><span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Break down next steps and timeline clearly in numbered structure.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Agent Word Share</div>
+    <div class="kpi-value">65% (Ideal: 45–60%)</div>
+    <div class="status mid">High</div>
+    <div class="history">Last 3 Calls: <span class="chip">58%</span><span class="chip">62%</span><span class="chip latest">65%</span><span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Allow customer more space before moving to explanation.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Summary Presence</div>
+    <div class="kpi-value">No structured recap detected</div>
+    <div class="status bad">Missing</div>
+    <div class="history">Last 3 Calls: <span class="chip">Present</span><span class="chip">Missing</span><span class="chip latest">Missing</span><span class="arrow-down">↓</span>
+	</div>
+    <div class="kpi-coach">Summarize resolution before asking closing question.</div>
+  </div>
+
+  <div class="kpi-card">
+    <div class="kpi-title">Closing Confirmation</div>
+    <div class="kpi-value">Resolution confirmation asked</div>
+    <div class="status good">Present</div>
+    <div class="history">Last 3 Calls: <span class="chip">Present</span><span class="chip">Present</span><span class="chip latest">Present</span><span class="arrow-up">↑</span>
+	</div>
+    <div class="kpi-coach">Maintain consistent professional closure.</div>
+  </div>
+
+</div>
+
+</div>
+
+<!-- COACHING FEEDBACK -->
+<div class="coaching-section">
+
+  <h2>Coaching Feedback</h2>
+
+  <div class="coaching-layout">
+
+    <!-- PRIORITY ACTIONS -->
+    <div class="coach-card priority">
+      <div class="coach-title">🔥 Priority Improvements</div>
+      <ul>
+        <li><strong>Increase Probing:</strong> Ask minimum 3 clarifying questions before offering resolution.</li>
+        <li><strong>Empathy Timing:</strong> Acknowledge emotional cues immediately before policy explanation.</li>
+        <li><strong>Structured Recap:</strong> End calls with a clear 2-line summary of action taken.</li>
+      </ul>
+    </div>
+
+    <!-- STRENGTHS -->
+    <div class="coach-card strength">
+      <div class="coach-title">📈 Strengths to Maintain</div>
+      <ul>
+        <li>Professional tone throughout interaction.</li>
+        <li>Clear explanation of refund timeline.</li>
+        <li>Consistent closing confirmation.</li>
+      </ul>
+    </div>
+
+    <!-- NEXT CALL TARGETS -->
+    <div class="coach-card target">
+      <div class="coach-title">🎯 Next Call Targets</div>
+      <div class="target-grid">
+        <div class="target-box">
+          <div class="target-number">3+</div>
+          <div class="target-label">Probing Questions</div>
+        </div>
+        <div class="target-box">
+          <div class="target-number">100%</div>
+          <div class="target-label">Empathy Before Solution</div>
+        </div>
+        <div class="target-box">
+          <div class="target-number">≤60%</div>
+          <div class="target-label">Word Share</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- TRANSCRIPT EVIDENCE -->
+    <div class="coach-card evidence">
+      <div class="coach-title">🗂 Transcript Highlights</div>
+      <div class="evidence-block">
+        <div class="evidence-tag">Missed Empathy</div>
+        <div class="evidence-text">
+          "Your refund is processed within 5–7 days."
+        </div>
+      </div>
+      <div class="evidence-block">
+        <div class="evidence-tag positive">Strong Closing</div>
+        <div class="evidence-text">
+          "Is there anything else I can assist you with today?"
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+</body>
+</html>
